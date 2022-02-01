@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/deploy/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    ports:
+      - 8000:8000
+
+  mysql:
+    platform: linux/amd64
+    image: mysql:5.7
+    container_name: godockerDB
+    restart: unless-stopped
+    environment:
+      MYSQL_USER: user
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: todolist
+    ports:
+      - 3306:3306
+    volumes:
+      - "./docker/mysql/dump.sql:/docker-entrypoint-initdb.d/dump.sql"
+
