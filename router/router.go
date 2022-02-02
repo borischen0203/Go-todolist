@@ -34,7 +34,11 @@ func SetupRouter() *gin.Engine {
 	router.GET("/health", handlers.HealthHandler)
 	router.GET("/version", handlers.VersionHandler)
 
-	// router.POST("/api/litclock-service/v1/numeric-time", handlers.ConvertTime)
+	router.POST("/todo", handlers.CreateItem)
+	router.POST("/todo/:id", handlers.UpdateItem)
+	router.GET("/todo-completed", handlers.GetCompletedItems)
+	router.GET("/todo-incomplete", handlers.GetIncompleteItems)
+	router.DELETE("/todo/:id", handlers.DeleteItem)
 
 	return router
 }
