@@ -1,6 +1,6 @@
-# .PHONY: docker-up
-# docker-up:
-# 	docker run -d -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=root mysql
+.PHONY: docker-run
+docker-run:
+	docker run -d -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=root mysql:5.7
 
 # docker-down:
 # 	docker rm -f mysql
@@ -15,8 +15,8 @@ docker-down: ## Stop docker containers and clear artefacts.
 	docker system prune
 
 
-.PHONY: open-sql
-open-sql:
+.PHONY: open
+open:
 	docker exec -it mysql mysql -uroot -proot
 
 .PHONY: create
