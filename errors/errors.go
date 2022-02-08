@@ -16,12 +16,17 @@ func (e ErrorInfo) IsNil() bool {
 	return ErrorInfo{} == e
 }
 
-var NoError = ErrorInfo{}
+var Ok = ErrorInfo{}
 
 // Invalid input
 var InvalidInputError = ErrorInfo{
 	Code: 400,
 	Msg:  "Invalid input",
+}
+
+var NotFoundError = ErrorInfo{
+	Code: 404,
+	Msg:  "Not found",
 }
 
 //Inter server error means unexpected error

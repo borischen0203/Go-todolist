@@ -45,51 +45,51 @@ func Setup() {
 }
 
 //Add todo item to DB
-func AddItem(todo dto.TodoItemModel) interface{} {
+func AddItem(todo dto.TodoItemModel) (interface{}, error) {
 	db := DbConn()
-	err := db.Create(&todo)
-	if err.Error != nil {
+	createResult := db.Create(&todo)
+	if createResult.Error != nil {
 		logger.Error.Printf("[AddItem] add item error: %+v\n", &todo)
-		return err.Error
+		return dto.TodoItemModel{}, createResult.Error
 	}
 	result := db.Last(&todo)
-	return result.Value
+	return result.Value, nil
 }
 
 //Get todo item by ID
-func GetItemByID(Id int) error {
+func GetItemByID(Id int) (interface{}, error) {
 	todo := &dto.TodoItemModel{}
 	db := DbConn()
-	result := db.First(&todo, Id)
-	if result.Error != nil {
-		logger.Error.Printf("[GetItemByID] query todo id error: %+v\n", Id)
-		return result.Error
+	queryResult := db.First(&todo, Id)
+	if queryResult.Error != nil {
+		logger.Error.Printf("[GetItemByID] id not found: %+v\n", Id)
+		return dto.TodoItemModel{}, queryResult.Error
 	}
-	return nil
+	return queryResult.Value, nil
 }
 
 //Update todo item by ID
-func UpdateItemByID(Id int, Completed bool) error {
+func UpdateItemByID(Id int, Completed bool) (interface{}, error) {
 	todo := &dto.TodoItemModel{}
 	db := DbConn()
 	result := db.First(&todo, Id)
 	if result.Error != nil {
 		logger.Error.Printf("[UpdateItemByID] query todo id error: %+v\n", Id)
-		return result.Error
+		return dto.TodoItemModel{}, result.Error
 	}
 	todo.Completed = Completed
 	db.Save(&todo)
-	return nil
+	return todo, nil
 }
 
 //Delete item by ID
 func DeleteItemByID(Id int) error {
 	todo := &dto.TodoItemModel{}
 	db := DbConn()
-	result := db.First(&todo, Id)
-	if result.Error != nil {
-		logger.Error.Printf("[DeleteItemByID] query todo id error: %+v\n", Id)
-		return result.Error
+	queryResult := db.First(&todo, Id)
+	if queryResult.Error != nil {
+		logger.Error.Printf("[DeleteItemByID] id not found: %+v\n", Id)
+		return queryResult.Error
 	}
 
 	deleteResult := db.Delete(&todo)
@@ -97,7 +97,6 @@ func DeleteItemByID(Id int) error {
 		logger.Error.Printf("[DeleteItemByID] delete id error: %+v\n", Id)
 		return deleteResult.Error
 	}
-
 	return nil
 }
 
@@ -110,6 +109,5 @@ func GetTodoItems(completed bool) interface{} {
 		logger.Error.Printf("[GetTodoItems] query todo items status error: %+v\n", completed)
 		return queryResult.Error
 	}
-
 	return queryResult.Value
 }

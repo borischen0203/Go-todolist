@@ -12,6 +12,7 @@ type TodoRequest struct {
 }
 
 type TodoUpdateRequest struct {
+	Id        int  `param:"id" `
 	Completed bool `form:"completed"`
 }
 
