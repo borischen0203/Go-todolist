@@ -44,34 +44,37 @@ func Setup() {
 	db.DB().SetMaxOpenConns(10)
 }
 
+//Add todo item to DB
 func AddItem(todo dto.TodoItemModel) interface{} {
 	db := DbConn()
-	db.Create(&todo)
-	if db.Error != nil {
-		logger.Error.Printf("[AddItem] todo: %+v\n", &todo)
-		return false
+	err := db.Create(&todo)
+	if err.Error != nil {
+		logger.Error.Printf("[AddItem] add item error: %+v\n", &todo)
+		return err.Error
 	}
 	result := db.Last(&todo)
 	return result.Value
 }
 
+//Get todo item by ID
 func GetItemByID(Id int) error {
 	todo := &dto.TodoItemModel{}
 	db := DbConn()
 	result := db.First(&todo, Id)
 	if result.Error != nil {
-		logger.Error.Printf("[GetItemByID] Id not found: %+v\n", Id)
+		logger.Error.Printf("[GetItemByID] query todo id error: %+v\n", Id)
 		return result.Error
 	}
 	return nil
 }
 
+//Update todo item by ID
 func UpdateItemByID(Id int, Completed bool) error {
 	todo := &dto.TodoItemModel{}
 	db := DbConn()
 	result := db.First(&todo, Id)
 	if result.Error != nil {
-		logger.Error.Printf("[UpdateItemByID] Id not found: %+v\n", Id)
+		logger.Error.Printf("[UpdateItemByID] query todo id error: %+v\n", Id)
 		return result.Error
 	}
 	todo.Completed = Completed
@@ -79,27 +82,34 @@ func UpdateItemByID(Id int, Completed bool) error {
 	return nil
 }
 
+//Delete item by ID
 func DeleteItemByID(Id int) error {
 	todo := &dto.TodoItemModel{}
 	db := DbConn()
 	result := db.First(&todo, Id)
 	if result.Error != nil {
-		logger.Error.Printf("[DeleteItemByID] Id not found: %+v\n", Id)
+		logger.Error.Printf("[DeleteItemByID] query todo id error: %+v\n", Id)
 		return result.Error
-	} else {
-		db.Delete(&todo)
 	}
+
+	deleteResult := db.Delete(&todo)
+	if deleteResult.Error != nil {
+		logger.Error.Printf("[DeleteItemByID] delete id error: %+v\n", Id)
+		return deleteResult.Error
+	}
+
 	return nil
 }
 
+//Get todo items by completed status
 func GetTodoItems(completed bool) interface{} {
 	todos := []dto.TodoItemModel{}
 	db := DbConn()
-	result := db.Where("completed = ?", completed).Find(&todos).Value
-	return result
+	queryResult := db.Where("completed = ?", completed).Find(&todos)
+	if queryResult.Error != nil {
+		logger.Error.Printf("[GetTodoItems] query todo items status error: %+v\n", completed)
+		return queryResult.Error
+	}
+
+	return queryResult.Value
 }
-
-// func AddItem(description string, completed bool) (string, error) {
-// 	return "", nil
-
-// }
