@@ -44,13 +44,13 @@ func Setup() {
 	db.DB().SetMaxOpenConns(10)
 }
 
-//Add todo item to DB
+//Add todo item
 func AddItem(todo dto.TodoItemModel) (interface{}, error) {
 	db := DbConn()
-	createResult := db.Create(&todo)
-	if createResult.Error != nil {
+	addResult := db.Create(&todo)
+	if addResult.Error != nil {
 		logger.Error.Printf("[AddItem] add item error: %+v\n", &todo)
-		return dto.TodoItemModel{}, createResult.Error
+		return dto.TodoItemModel{}, addResult.Error
 	}
 	result := db.Last(&todo)
 	return result.Value, nil
@@ -101,13 +101,13 @@ func DeleteItemByID(Id int) error {
 }
 
 //Get todo items by completed status
-func GetTodoItems(completed bool) interface{} {
+func GetTodoItems(completed bool) (interface{}, error) {
 	todos := []dto.TodoItemModel{}
 	db := DbConn()
 	queryResult := db.Where("completed = ?", completed).Find(&todos)
 	if queryResult.Error != nil {
 		logger.Error.Printf("[GetTodoItems] query todo items status error: %+v\n", completed)
-		return queryResult.Error
+		return []dto.TodoItemModel{}, queryResult.Error
 	}
-	return queryResult.Value
+	return queryResult.Value, nil
 }

@@ -11,10 +11,13 @@ import (
 )
 
 func CreateItemService(request dto.TodoRequest) (int64, interface{}, e.ErrorInfo) {
-	todo := dto.TodoItemModel{Description: request.Descripion, Completed: false}
+	todo := dto.TodoItemModel{
+		Description: request.Descripion,
+		Completed:   false,
+	}
 	result, err := database.AddItem(todo)
 	if err != nil {
-		logger.Error.Printf("[CreateItemService] add item error ,request=%+v\n", request)
+		logger.Error.Printf("[CreateItemService] add item error ,request:%+v\n", request)
 		return 500, dto.TodoItemModel{}, e.InternalServerError
 	}
 	return 200, result, e.Ok
@@ -43,10 +46,10 @@ func DeleteItemService(id int) (int64, bool, e.ErrorInfo) {
 	return 500, false, e.InternalServerError
 }
 
-func GetCompletedItemsService() {
-
-}
-
-func GetInCompletedItemsService() {
-
+func GetItemsService(status bool) (int64, interface{}, e.ErrorInfo) {
+	todoItems, error := database.GetTodoItems(status)
+	if error != nil {
+		return 500, []dto.TodoItemModel{}, e.InternalServerError
+	}
+	return 200, todoItems, e.Ok
 }

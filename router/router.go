@@ -32,17 +32,17 @@ func Cors() gin.HandlerFunc {
 		method := c.Request.Method
 		origin := c.Request.Header.Get("Origin") //請求頭部
 		if origin != "" {
-			//接收客戶端傳送的origin （重要！）
+			//接收客戶端傳送的origin
 			c.Writer.Header().Set("Access-Control-Allow-Origin", origin)
 			//伺服器支援的所有跨域請求的方法
 			c.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE,UPDATE")
 			//允許跨域設定可以返回其他子段，可以自定義欄位
 			// c.Header("Access-Control-Allow-Headers", "Authorization, Content-Length, X-CSRF-Token, Token,session")
-			// 允許瀏覽器（客戶端）可以解析的頭部 （重要）
+			// 允許瀏覽器（客戶端）可以解析的頭部
 			// c.Header("Access-Control-Expose-Headers", "Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers")
 			//設定快取時間
 			// c.Header("Access-Control-Max-Age", "172800")
-			//允許客戶端傳遞校驗資訊比如 cookie (重要)
+			//允許客戶端傳遞校驗資訊比如 cookie
 			// c.Header("Access-Control-Allow-Credentials", "true")
 		}
 
