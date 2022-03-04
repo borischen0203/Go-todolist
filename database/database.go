@@ -1,6 +1,9 @@
 package database
 
 import (
+	"fmt"
+
+	"github.com/borischen0203/Go-todolist/config"
 	"github.com/borischen0203/Go-todolist/dto"
 	"github.com/borischen0203/Go-todolist/logger"
 
@@ -13,10 +16,10 @@ import (
 
 func DbConn() (db *gorm.DB) {
 	//For docker-compose
-	// source := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local", config.Env.DBUser, config.Env.DBPassword, config.Env.DBHost, config.Env.DBName)
+	source := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local", config.Env.DBUser, config.Env.DBPassword, config.Env.DBHost, config.Env.DBName)
 
 	//For
-	source := "root:root@/todolist?charset=utf8&parseTime=True&loc=Local"
+	// source := "root:root@/todolist?charset=utf8&parseTime=True&loc=Local"
 
 	//Connect to mysql
 	db, err := gorm.Open("mysql", source)

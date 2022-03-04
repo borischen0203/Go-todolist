@@ -1,6 +1,16 @@
 version: '3.7'
 
 services:
+  nginx:                     #Declaration to define for nginx.
+    build: ./nginx           #Dockerfile path
+    image: front:0.0.2       #Specify the image name
+    container_name: "front"  #Specify the container name
+    ports:                   #Specify the contents of the port disclosure.
+      - "8080:80"            #If it is 80 on the container side, it will be 8080 on the host side.
+    volumes:                 #Add the host folder to the container. Host side:Container side
+      - ./nginx/conf/default.conf:/etc/nginx/conf.d/default.conf  #Copy config file
+      - ./nginx/src:/usr/share/nginx/html         #Copy
+
   app:
     build:
       context: .
