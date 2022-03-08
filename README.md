@@ -12,7 +12,7 @@ https://github.com/sdil/todo
 
 ## Run in Local:
 Required
-- Install go(version >= 1.6)
+- Install go(version >= 1.7)
 - Install docker
 - Install `make` cli(https://formulae.brew.sh/formula/make)
 ```bash
@@ -28,3 +28,5 @@ Step2: Use `make` to execute makefile run docker-compose
 ```bash
 make docker-up
 ```
+Step3:
+Open browse:http://localhost:8080/
