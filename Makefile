@@ -7,11 +7,11 @@
 
 .PHONY: docker-up
 docker-up:
-	docker-compose -f docker-compose.yaml up --build
+	docker-compose -f docker-compose.yml up --build
 
 .PHONY: docker-down
 docker-down: ## Stop docker containers and clear artefacts.
-	docker-compose -f docker-compose.yaml down
+	docker-compose -f docker-compose.yml down
 	docker system prune
 
 
