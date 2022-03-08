@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/scraly/gophers/main/chandleur-gopher.png" alt="chandleur-gopher">
+<img src="https://raw.githubusercontent.com/scraly/gophers/main/chandleur-gopher.png" alt="chandleur-gopher" width=400 >
 
 
 # Go-todolist
