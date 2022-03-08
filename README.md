@@ -1,3 +1,6 @@
+<img src="https://raw.githubusercontent.com/scraly/gophers/main/chandleur-gopher.png" alt="chandleur-gopher">
+
+
 # Go-todolist
 This is a todo list service. You can get, create, update and delete todo item.
 
@@ -12,7 +15,7 @@ https://github.com/sdil/todo
 
 ## Run in Local:
 Required
-- Install go(version >= 1.7)
+<!-- - Install go(version >= 1.7) -->
 - Install docker
 - Install `make` cli(https://formulae.brew.sh/formula/make)
 ```bash
@@ -28,5 +31,31 @@ Step2: Use `make` to execute makefile run docker-compose
 ```bash
 make docker-up
 ```
+
+If you don't have make command, use below command
+```bash
+docker-compose -f docker-compose.yml up --build
+```
+
 Step3:
 Open browse:http://localhost:8080/
+
+Demo:
+
+
+## Tech Stack
+- Golang
+- Gin framework
+- RESTful API
+- MySQL
+<!-- - Swagger -->
+- Docker-compose
+- Github action(CI)
+- Ngnix
+
+
+## Todo:
+- [ ] Add more status codes
+- [ ] Improve services
+- [ ] Improve handlers
+
