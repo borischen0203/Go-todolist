@@ -9,7 +9,10 @@ https://github.com/sdil/todo
 
 
 ## Features
--
+- Get All todo items
+- Create todo item
+- Update todo item status
+- Delete todo items
 
 # How to use
 
@@ -41,11 +44,13 @@ Step3:
 Open browse:http://localhost:8080/
 
 Demo:
+[img]https://upload.cc/i1/2022/03/08/0emvHs.png[/img]
 
 
 ## Tech Stack
 - Golang
 - Gin framework
+- Gorm
 - RESTful API
 - MySQL
 <!-- - Swagger -->
