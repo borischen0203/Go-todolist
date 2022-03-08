@@ -44,7 +44,7 @@ Step3:
 Open browse:http://localhost:8080/
 
 Demo:
-[img]https://upload.cc/i1/2022/03/08/0emvHs.png[/img]
+<img src=https://upload.cc/i1/2022/03/08/0emvHs.png >
 
 
 ## Tech Stack
